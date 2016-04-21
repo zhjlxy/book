@@ -40,7 +40,7 @@
 
 
 <div  id="contxt" class="container contxt">
-    <form class="form-horizontal">
+    <form class="form-horizontal" enctype="multipart/form-data  ">
         <div class="form-group">
             <label class="col-sm-2 control-label" for="name">名字</label>
             <div class="col-sm-4">
@@ -67,24 +67,26 @@
                 </select>
             </div>
         </div>
-        <dev class="form-group">
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="desc">描述</label>
             <div class="col-sm-10">
                 <textarea id="desc" class="form-control" type="text" >
                 </textarea>
             </div>
 
-        </dev>
+        </div>
 
-        <dev class="form-group">
+        <div class="form-group">
             <label class="col-sm-2 control-label" for="img">图片</label>
             <div class="col-sm-4">
                 <input type="file" id="img">
             </div>
 
-        </dev>
-
-
+        </div>
+        <!-- 提交-->
+        <div class="form-group text-right">
+            <button class="btn bg-primary " type="button" onclick="sub()">提交</button>
+        </div>
     </form>
 </div>
 
@@ -92,21 +94,12 @@
 <script src="../bootStrap/other/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../bootStrap/js/bootstrap.min.js"></script>
-<script src="../bootStrap/bootStrap-fileinput/canvas-to-blob.js"></script>
 <script src="../bootStrap/bootStrap-fileinput/fileinput.js"></script>
 <script src="../bootStrap/bootStrap-fileinput/fileinput_locale_zh.js"></script>
 <script src="../js/comm.js"></script>
+<script src="../js/addbook.js"></script>
 <script >
-    $(document).ready(function () {
-        $("#img").fileinput({
-            language: 'zh', //设置语言
-            allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
-            showUpload: false, //是否显示上传按钮
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-        });
-    })
+
 
 </script>
 </body>

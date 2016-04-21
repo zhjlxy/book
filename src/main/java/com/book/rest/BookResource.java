@@ -5,8 +5,10 @@ import com.book.entity.Book;
 import com.book.service.BookService;
 import com.book.vo.PageResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class BookResource {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     PageResultVo list(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum){
         PageResultVo vo = new PageResultVo(true);
@@ -36,6 +38,14 @@ public class BookResource {
         return  vo;
     }
 
+    @RequestMapping(value="/upload",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String upload(@RequestParam  MultipartFile[] file){
+
+
+        System.out.println(file);
+
+        return null;
+    }
 
     @RequestMapping(value = "{id}" ,method = RequestMethod.GET, produces="application/json")
     public @ResponseBody  Book getById(@PathVariable int id){

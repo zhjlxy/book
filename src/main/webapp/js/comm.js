@@ -18,6 +18,23 @@ var request = {
         });
     },
 
+
+
+//初始化fileinput控件（第一次初始化）
+inputfile:function initFileInput(ctrlName, uploadUrl) {
+        var control = $('#' + ctrlName);
+        control.fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: '/book'+ uploadUrl, //上传的地址
+            allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+            showUpload: true    , //是否显示上传按钮
+            showCaption:true,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            showPreview:false,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        });
+    },
+
     ajaxFileUpload: function (url, param, fileElementId, successFn) {
         $.ajaxFileUpload({
             url: '/book/' + url,
