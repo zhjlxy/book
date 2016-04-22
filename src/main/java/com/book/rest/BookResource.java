@@ -9,7 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +23,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/book")
 public class BookResource {
+
+    private static final String BOOK_IMG_PATH = "/img/";
 
     @Autowired
     private BookService bookService;
@@ -39,10 +46,27 @@ public class BookResource {
     }
 
     @RequestMapping(value="/upload",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String upload(@RequestParam  MultipartFile[] file){
-
-
+    public @ResponseBody String upload(@RequestParam  MultipartFile file, MultipartHttpServletRequest request){
         System.out.println(file);
+        OutputStream outputStream = null;
+        try{
+
+            InputStream in = file.getInputStream();
+            outputStream = new FileOutputStream(BOOK_IMG_PATH+new Date().getTime()+file.getName());
+            byte[] bytes = new byte[1024];
+            int len = 0;
+            while((len = in.read(bytes))>0){
+                outputStream.write(bytes,0,len);
+            }
+
+
+
+        }catch (Exception e){
+
+        }
+
+
+
 
         return null;
     }
