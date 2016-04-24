@@ -21,7 +21,7 @@ var request = {
 
 
 //初始化fileinput控件（第一次初始化）
-inputfile:function initFileInput(ctrlName, uploadUrl) {
+inputfile:function initFileInput(ctrlName, uploadUrl, successFn) {
         var control = $('#' + ctrlName);
         control.fileinput({
             language: 'zh', //设置语言
@@ -31,9 +31,34 @@ inputfile:function initFileInput(ctrlName, uploadUrl) {
             showCaption:true,//是否显示标题
             browseClass: "btn btn-primary", //按钮样式
             showPreview:false,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>"
         });
+
+    // 上传成功
+    control.on("fileuploaded", function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+            response = data.response, reader = data.reader;
+
+        successFn(response);
+        console.log('File uploaded triggered');
+    });
+    control.on('fileuploaderror', function(event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+            response = data.response, reader = data.reader;
+        console.log(data);
+        console.log('File upload error');
+    });
+
+    control.on('fileerror', function(event, data) {
+        console.log(data.id);
+        console.log(data.index);
+        console.log(data.file);
+        console.log(data.reader);
+        console.log(data.files);
+    });
+
     },
+
 
     ajaxFileUpload: function (url, param, fileElementId, successFn) {
         $.ajaxFileUpload({
@@ -102,4 +127,12 @@ inputfile:function initFileInput(ctrlName, uploadUrl) {
         return draw.join('');
     }
 
+};
+var url_util = {
+    //获取链接URL中的某个key的值
+    queryString: function (val) {
+        var uri = window.location.search;
+        var re = new RegExp("" + val + "\\=([^\\&\\?]*)", "ig");
+        return ((uri.match(re)) ? (uri.match(re)[0].substr(val.length + 1)) : null);
+    }
 };

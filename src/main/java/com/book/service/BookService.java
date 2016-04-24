@@ -1,6 +1,7 @@
 package com.book.service;
 
 import com.book.entity.Book;
+import com.book.vo.BookVo;
 
 import java.util.List;
 
@@ -13,5 +14,7 @@ public interface BookService {
     // 分页
     public List<Book> list(int pageSize, int pageNum);
 
-    public Book getById(int id);
+    public BookVo getById(int id);
+
+    public int saveOrUpdate(BookVo bookVo);
 }

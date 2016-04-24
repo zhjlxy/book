@@ -14,18 +14,28 @@ import java.util.Date;
 @Entity
 public class Book implements Serializable {
 
+    /** 销售中 */
+    public static final String SELL_IN = "in";
+
+    /** 已卖出*/
+    public static final String SELL_OVER = "over";
+
+    /**已下架*/
+    public static final String SELL_OFF = "off";
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private int id;
 
-    @Column(name="name")
+    @Column(name="book_name")
     private String name;
 
     @Column(name="author")
     private String author;
 
-    @Column(name="desc")
+    @Column(name="book_desc")
     private String desc;
 
     @Column(name="price")

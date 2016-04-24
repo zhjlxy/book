@@ -5,12 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>添加书</title>
+    <title>二手书交易平台</title>
 
     <!-- Bootstrap -->
     <link href="../bootStrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/comm.css" rel="stylesheet">
-    <link href="../bootStrap/bootStrap-fileinput/css/fileinput.css" media="all" rel="stylesheet" type="text/css">
+    <link href="../bootStrap/bootStrap-fileinput/css/fileinput.css" rel="stylesheet">
+    <link href="../bootStrap/bootValidator/css/bootstrapValidator.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="../bootStrap/other/html5shiv.js"></script>
     <script src="../bootStrap/other/respond.js"></script>
@@ -40,21 +41,22 @@
 
 
 <div  id="contxt" class="container contxt">
-    <form class="form-horizontal" enctype="multipart/form-data  ">
+    <form id="form" class="form-horizontal" enctype="multipart/form-data  " method="post" action="javascript:sub();">
+        <input type="hidden" id="id" value=""/>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="name">名字</label>
             <div class="col-sm-4">
-                <input class="form-control" id="name" type="text" placeholder="输入书名"/>
+                <input class="form-control" id="name" type="text" placeholder="输入书名" required data-bv-notempty-message="名字不能为空"/>
             </div>
             <label class="col-sm-2 control-label" for="author">作者</label>
             <div class="col-sm-4">
-                <input class="form-control" id="author" type="text" placeholder="作者"/>
+                <input class="form-control" id="author" type="text" placeholder="作者"  required data-bv-notempty-message="作者不能为空"/>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="price">价格</label>
             <div class="col-sm-4">
-                <input class="form-control" id="price" type="text" placeholder="价格"/>
+                <input class="form-control" id="price" type="number" placeholder="价格" step="any"  required data-bv-notempty-message="价格不能为空"/>
             </div>
             <label class="col-sm-2 control-label" for="new_status">新旧度</label>
             <div class="col-sm-4">
@@ -69,23 +71,24 @@
         </div>
         <div class="form-group">
             <label class="col-sm-2 control-label" for="desc">描述</label>
-            <div class="col-sm-10">
-                <textarea id="desc" class="form-control" type="text" >
-                </textarea>
+            <div class="col-sm-4">
+                <textarea id="desc" class="form-control" type="text" ></textarea>
             </div>
 
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="img">图片</label>
+            <input type="hidden" id="picture" value="">
+            <label class="col-sm-2 control-label" for="img" required data-bv-notempty-message="图片不能为空">图片</label>
             <div class="col-sm-4">
-                <input type="file" id="img">
+                <img id="img_msg" src="" hidden/>
+                <input type="file" name="img" id="img">
             </div>
 
         </div>
         <!-- 提交-->
         <div class="form-group text-right">
-            <button class="btn bg-primary " type="button" onclick="sub()">提交</button>
+            <button class="btn bg-primary " id="submit" type="submit">提交</button>
         </div>
     </form>
 </div>
@@ -98,10 +101,6 @@
 <script src="../bootStrap/bootStrap-fileinput/fileinput_locale_zh.js"></script>
 <script src="../js/comm.js"></script>
 <script src="../js/addbook.js"></script>
-<script >
-
-
-</script>
 </body>
 
 </html>
