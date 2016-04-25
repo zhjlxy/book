@@ -9,9 +9,9 @@ import com.book.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -28,6 +28,12 @@ public class UserResource {
     @Autowired
     private UserService userService;
 
+    /**
+     * 登录
+     * @param userVo 登录的用户名密码
+     * @return
+     */
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Message login(UserVo userVo){
         Message msg = new Message();
         try {
@@ -53,4 +59,53 @@ public class UserResource {
         }
         return msg;
     }
+
+    /**
+     * {"valid":true}
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value = "/valid",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody JSONObject validUserName( String username){
+        JSONObject json = null;
+
+        try{
+            boolean result = userService.validUserName(username);
+            json = new JSONObject();
+            json.put("valid", result);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            json = new JSONObject();
+            json.put("valid",false);
+        }
+
+        return json;
+    }
+
+    /**
+     *  用户注册
+     * @param userVo 用户注册信息
+     * @return 用户id
+     */
+    @RequestMapping(value = "/register",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message register(@RequestBody UserVo userVo){
+        Message msg  = new Message();
+        try{
+            // 校验数据
+            if(userVo == null || StringUtils.isBlank(userVo.getUser_name())
+                    ||StringUtils.isBlank(userVo.getPassword()) || userVo.getRole()==null){
+                msg.setStatus(Status.ERROR);
+                msg.setStatusMsg("数据错误");
+                return msg;
+            }
+
+            String userId = userService.register(userVo);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+        }
+        return msg;
+    }
+
 }

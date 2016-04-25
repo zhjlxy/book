@@ -3,6 +3,7 @@ package com.book.dao.impl;
 import com.book.dao.UserDao;
 import com.book.entity.User;
 import com.book.vo.UserVo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
  * Created by admin on 2016/4/25.
  * 用户的dao实现类
  */
+@Component
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     @Override
     public User get(String s) {
@@ -54,6 +56,21 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
 
         // 出现多条数据
+        if(users.size()>1){
+            throw new RuntimeException("查询结果大于1，请与管理员联系！");
+        }
+        return users.get(0);
+    }
+
+    @Override
+    public User getByUserName(String userName) {
+        List<User> users =  getCurrentSession().createQuery("from User user where user.userName=:username")
+                .setString("username", userName).list();
+
+        if(users == null || users.isEmpty()){
+            return null;
+        }
+
         if(users.size()>1){
             throw new RuntimeException("查询结果大于1，请与管理员联系！");
         }

@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by admin on 2016/4/25.
  *  系统用户实体类
  */
-@Table(name = "book")
+@Table(name = "user")
 @Entity
 public class User {
 

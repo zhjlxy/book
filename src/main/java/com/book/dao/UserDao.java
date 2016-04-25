@@ -8,4 +8,6 @@ import com.book.vo.UserVo;
  */
 public interface UserDao extends  GenericDao<User,String> {
     public User getByUserNameAndPassword(UserVo userVo);
+
+    public User getByUserName(String userName);
 }

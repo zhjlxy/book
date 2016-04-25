@@ -14,4 +14,18 @@ public interface UserService {
      * @return
      */
     public Role login(UserVo userVo);
+
+    /**
+     *  用户注册
+     * @param userVo 用户注册信息
+     * @return 用户Id
+     */
+    public String register(UserVo userVo);
+
+    /**
+     * 校验用户名是否存在
+     * @param userName
+     * @return
+     */
+    public boolean validUserName(String userName);
 }
