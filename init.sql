@@ -44,3 +44,17 @@ insert  into `book`(`id`,`book_name`,`author`,`book_desc`,`price`,`picture`,`sel
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+-- user表
+CREATE TABLE `user` (
+  `id` varchar(32) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `uts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
