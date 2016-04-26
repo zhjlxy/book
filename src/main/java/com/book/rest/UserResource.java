@@ -34,7 +34,7 @@ public class UserResource {
      * @return
      */
     @RequestMapping(value = "/login",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Message login(UserVo userVo){
+    public @ResponseBody Message login(@RequestBody UserVo userVo){
         Message msg = new Message();
         try {
             if(userVo==null || StringUtils.isBlank(userVo.getUser_name()) || StringUtils.isBlank(userVo.getPassword())){
@@ -62,7 +62,7 @@ public class UserResource {
 
     /**
      * {"valid":true}
-     * @param userName
+     * @param username
      * @return
      */
     @RequestMapping(value = "/valid",method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
