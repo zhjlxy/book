@@ -5,11 +5,7 @@ $(document).ready(function() {
     // Generate a simple captcha
     initValidator();
 });
-function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
 function initValidator() {
-    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
 
     $('#defaultForm').bootstrapValidator({
         //        live: 'disabled',
@@ -34,14 +30,6 @@ function initValidator() {
                     regexp: {
                         regexp: /^[a-zA-Z0-9_\.]+$/,
                         message: '用户名只能由字母、数字、点和下划线组成'
-                    },
-                    remote: {
-                        url: '/book/user/valid',
-                        message: '用户名不可用'
-                    },
-                    different: {
-                        field: 'password',
-                        message: '用户名和密码不能相同'
                     }
                 }
             },
@@ -49,29 +37,6 @@ function initValidator() {
                 validators: {
                     notEmpty: {
                         message: '密码不能位空'
-                    },
-                    identical: {
-                        field: 'confirmPassword',
-                        message: '两次密码不一致'
-                    },
-                    different: {
-                        field: 'username',
-                        message: '用户名和密码不能相同'
-                    }
-                }
-            },
-            confirmPassword: {
-                validators: {
-                    notEmpty: {
-                        message: '密码不能为空'
-                    },
-                    identical: {
-                        field: 'password',
-                        message: '两次密码不一致'
-                    },
-                    different: {
-                        field: 'username',
-                        message: '用户名和密码不能相同'
                     }
                 }
             },
@@ -91,7 +56,7 @@ function initValidator() {
  */
 
 function sub(){
-    alert("aa");
+
     var json = {
         "user_name":$("#username").val(),
         "password":$("#password").val(),
@@ -99,15 +64,18 @@ function sub(){
     }
 
     // 注册
-    request.ajax("POST","user/register",json,function(data){
+    request.ajax("POST","user/login",json,function(data){
         if(data.status=="SUCCESS"){
-            location.href = "login.html";
+            location.href = "bookList.html";
         }else{
             var msg = "unkown error";
-            if(data.statusMsg == ""){
+            if(data.statusMsg != ""){
                 msg = data.statusMsg;
             }
-            alert(msg);
+            $("#errorInfo").html(msg);
+            $("#myAlert").removeAttr("hidden");
+            $("#sub").removeAttr("disabled");
         }
+
     });
 }

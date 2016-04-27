@@ -28,4 +28,10 @@ public interface UserService {
      * @return
      */
     public boolean validUserName(String userName);
+
+    /**
+     * 取登录的用户名
+     * @return 登录的用户名，如果没有登录，返回游客
+     */
+    public String getUserName();
 }

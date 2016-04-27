@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * Created by admin on 2016/4/25.
@@ -49,7 +51,10 @@ public class UserResource {
                 msg.setStatus(Status.ERROR);
                 msg.setStatusMsg("用户名密码错误！");
             }else{
-                msg.setData(new JSONObject().put("role", role).toString());
+                msg.setStatus(Status.SUCCESS);
+                JSONObject json = new JSONObject();
+                json.put("role", role);
+                msg.setData(json.toString());
             }
 
         }catch (Exception e){
@@ -100,6 +105,25 @@ public class UserResource {
             }
 
             String userId = userService.register(userVo);
+            msg.setStatus(Status.SUCCESS);
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+        }
+        return msg;
+    }
+
+    @RequestMapping(value = "/user_name",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message getUserName(){
+        Message msg  = new Message();
+        try{
+            String userName = userService.getUserName();
+            msg.setStatus(Status.SUCCESS);
+            JSONObject json = new JSONObject();
+            json.put("user_mame", userName);
+            msg.setData(json.toJSONString());
+
         }catch (Exception e){
             logger.error(e.getMessage(), e);
             msg.setStatus(Status.ERROR);

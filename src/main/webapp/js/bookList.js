@@ -3,6 +3,8 @@
  */
 var rowSize = 4;
 $(document).ready(function () {
+    // 添加欢迎语
+    addUserName();
     getData(1);
 });
 
@@ -33,7 +35,7 @@ function getData(pageNum) {
                     var devDom = $("<dev class='col-xs-6 col-md-3'></dev>");
                     var aDom = $("<a href='bookInfo.html?bookId="+json.id+"' class='thumbnail'></a>");
                     var imgDom = $(" <img style='height: 180px' src=\"../img"+json.picture+"\">");
-                    var pDom = $("<p class=\"text-center\">"+json.name+"<label class='btn btn-danger'><b>"+json.price+"<span class=\"glyphicon-yen\" aria-hidden=\"true\"></span></b></label></p>")
+                    var pDom = $("<p class=\"text-center\">"+json.name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class='btn btn-danger'><b>"+json.price+"<span class=\"glyphicon-yen\" aria-hidden=\"true\"></span></b></label></p>")
 
                     aDom.append(imgDom);
 

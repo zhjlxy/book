@@ -2,6 +2,9 @@
  * Created by lixuy on 2016/4/25.
  */
 $(document).ready(function () {
+
+    // 添加欢迎语
+    addUserName();
     var bookId = url_util.queryString("bookId");
     if(bookId == null || bookId == ""){
         alert("系统错误，请与管理员联系！");
