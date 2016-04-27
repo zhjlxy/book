@@ -73,7 +73,7 @@ CREATE TABLE `book_type` (
   `desc` varchar(100) NOT NULL,
   `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 insert into `book_type` (`desc`, `cts`) values('百科','2016-04-27 17:35:20');
 insert into `book_type` (`desc`, `cts`) values('社会','2016-04-27 17:36:20');

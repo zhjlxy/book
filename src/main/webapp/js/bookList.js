@@ -5,12 +5,42 @@ var rowSize = 4;
 $(document).ready(function () {
     // 添加欢迎语
     addUserName();
-    getData(1);
+    initType();
+    getData(1,"");
 });
 
-function getData(pageNum) {
+/**
+ * 初始化类型
+ */
+function initType(){
+    request.ajax("GET","bookType","",function successFn(data) {
+        if(data.status=="SUCCESS"){
+            var arr = $.parseJSON(data.data);
+            for(var i=0;i<arr.length; i++){
+                var json = arr[i];
+                $("#type_ul").append("<li class=\"menuItem menuItemWith\"><a href=\"javascript:void(0)\" onclick=\"getData(1,'"+json.id+"')\">"+json.desc+"</a></li>");
+            }
 
-    request.ajax("GET","book?pageSize=8&pageNum="+pageNum,"",function successFn(data) {
+        }else{
+            alert(date.statusMsg);
+        }
+
+    });
+}
+
+
+/**
+ *  填充课本信息
+ * @param pageNum 第几页
+ * @param type 类型
+ */
+function getData(pageNum,type) {
+
+    var add_type=""
+    if(type != ""){
+        add_type = "&type="+type;
+    }
+    request.ajax("GET","book?pageSize=8&pageNum="+pageNum+add_type,"",function successFn(data) {
 
         // 成功
         if (data.flag) {
@@ -35,7 +65,7 @@ function getData(pageNum) {
                     var devDom = $("<dev class='col-xs-6 col-md-3'></dev>");
                     var aDom = $("<a href='bookInfo.html?bookId="+json.id+"' class='thumbnail'></a>");
                     var imgDom = $(" <img style='height: 180px' src=\"../img"+json.picture+"\">");
-                    var pDom = $("<p class=\"text-center\">"+json.name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class='btn btn-danger'><b>"+json.price+"<span class=\"glyphicon-yen\" aria-hidden=\"true\"></span></b></label></p>")
+                    var pDom = $("<p class=\"text-center\">"+json.name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label class='btn btn-danger'><b><span class=\"glyphicon-yen\" aria-hidden=\"true\"></span>"+json.price+"</b></label></p>")
 
                     aDom.append(imgDom);
 
@@ -50,16 +80,17 @@ function getData(pageNum) {
             // 如果count>1有分页
             // 分页
             $("#navUl").empty();
-            for (var c = 1; c <= count; c++) {
-                var liDom;
-                if (c == pagNum) {
-                    liDom = "<li class=\"active\"><a href=\"javascript:void(0)\" onclick='getData(" + c + ")'>" + c + " <span class=\"sr-only\">(current)</span></a></li>";
-                } else {
-                    liDom = "<li><a a href=\"javascript:void(0)\" onclick='getData(" + c + ")'>" + c + " <span class=\"sr-only\">(current)</span></a></li>";
+            if(count>1) {
+                for (var c = 1; c <= count; c++) {
+                    var liDom;
+                    if (c == pagNum) {
+                        liDom = "<li class=\"active\"><a href=\"javascript:void(0)\" onclick='getData(" + c + ",\"" + type + "\")'>" + c + " <span class=\"sr-only\">(current)</span></a></li>";
+                    } else {
+                        liDom = "<li><a a href=\"javascript:void(0)\" onclick=\"getData(" + c + ",'" + type + "')\">" + c + " <span class=\"sr-only\">(current)</span></a></li>";
+                    }
+                    $("#navUl").append(liDom);
                 }
-                $("#navUl").append(liDom);
             }
-
         } else {
             alert("data error")
         }

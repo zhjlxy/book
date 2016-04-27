@@ -24,14 +24,14 @@ public class BookServiceImpl  implements BookService{
 
 
     @Override
-    public List<Book> list() {
-        return bookDao.list();
+    public List<Book> list(String type) {
+        return bookDao.list(type);
     }
 
     @Override
-    public List<Book> list(int pageSize, int pageNum) {
+    public List<Book> list(int pageSize, int pageNum, String type) {
         int firstNum = pageSize*(pageNum-1);
-        return bookDao.list(firstNum, pageSize);
+        return bookDao.list(firstNum, pageSize, type);
     }
 
     @Override
@@ -86,14 +86,15 @@ public class BookServiceImpl  implements BookService{
 
     public BookVo EntityToVo(Book book){
         BookVo vo = new BookVo();
-        vo.setId(book.getId());
-        vo.setPicture(book.getPicture());
-        vo.setDesc(book.getDesc());
-        vo.setAuthor(book.getAuthor());
-        vo.setName(book.getName());
-        vo.setNew_status(book.getNewStatus());
-        vo.setPrice(book.getPrice());
-
+        if(book != null){
+            vo.setId(book.getId());
+            vo.setPicture(book.getPicture());
+            vo.setDesc(book.getDesc());
+            vo.setAuthor(book.getAuthor());
+            vo.setName(book.getName());
+            vo.setNew_status(book.getNewStatus());
+            vo.setPrice(book.getPrice());
+        }
         return vo;
     }
 }

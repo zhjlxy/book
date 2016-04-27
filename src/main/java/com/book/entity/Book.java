@@ -50,6 +50,9 @@ public class Book implements Serializable {
     @Column(name="new_status")
     private String newStatus;
 
+    @Column(name="type_id")
+    private int typeId;;
+
     @Column(name="sell_status")
     private String sellStatus;
 
@@ -123,6 +126,14 @@ public class Book implements Serializable {
 
     public void setNewStatus(String newStatus) {
         this.newStatus = newStatus;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public String getSellStatus() {

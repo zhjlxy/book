@@ -136,3 +136,4 @@ var url_util = {
         return ((uri.match(re)) ? (uri.match(re)[0].substr(val.length + 1)) : null);
     }
 };
+
