@@ -137,3 +137,12 @@ var url_util = {
     }
 };
 
+/**
+ *  修改导航条的当前激活状态
+ * @param obj
+ */
+function changeNavActive(obj){
+    $(obj).parent().parent().children().removeClass("active");
+    $(obj).parent().addClass("active");
+}
+

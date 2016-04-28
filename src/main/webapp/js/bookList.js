@@ -18,7 +18,7 @@ function initType(){
             var arr = $.parseJSON(data.data);
             for(var i=0;i<arr.length; i++){
                 var json = arr[i];
-                $("#type_ul").append("<li class=\"menuItem menuItemWith\"><a href=\"javascript:void(0)\" onclick=\"getData(1,'"+json.id+"')\">"+json.desc+"</a></li>");
+                $("#type_ul").append("<li class=\"menuItem menuItemWith\"><a href=\"javascript:void(0)\" onclick=\"getType(1,'"+json.id+"',this)\">"+json.desc+"</a></li>");
             }
 
         }else{
@@ -26,6 +26,12 @@ function initType(){
         }
 
     });
+}
+
+function getType(pageNum,type,obj) {
+    $(obj).parent().parent().children().removeClass("active");
+    $(obj).parent().addClass("active");
+    getData(pageNum, type);
 }
 
 
