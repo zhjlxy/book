@@ -18,7 +18,7 @@ function initType(){
             var arr = $.parseJSON(data.data);
             for(var i=0;i<arr.length; i++){
                 var json = arr[i];
-                $("#type_ul").append("<li class=\"menuItem menuItemWith\"><a href=\"javascript:void(0)\" onclick=\"getType(1,'"+json.id+"',this)\">"+json.desc+"</a></li>");
+                $("#type_ul").append("<li class=\"menuItem menuItemWith text-center\"><a href=\"javascript:void(0)\" onclick=\"getType(1,'"+json.id+"',this)\">"+json.desc+"</a></li>");
             }
 
         }else{
