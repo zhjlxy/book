@@ -29,3 +29,23 @@ $(document).ready(function () {
     });
 
 });
+
+function addCar() {
+    var id = $("#id").val();
+    if(id == "" || id == undefined){
+        alert("error");
+        return;
+    } 
+    request.ajax("GET","car/add?book_id="+id,"",function successFn(data){
+        if(data.status=="SUCCESS"){
+            carNum();
+            alert("添加成功!");
+        }else{
+            var msg = data.statusMsg;
+            if( msg == ""){
+                msg ="error";
+            }
+            alert(msg);
+        }
+    });
+}

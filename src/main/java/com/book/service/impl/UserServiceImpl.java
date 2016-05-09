@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
     /**保存到session 中userId 的key*/
-    private static final String USERID = "userId";
+    public static final String USERID = "userId";
 
     @Autowired
     private UserDao userDao;
