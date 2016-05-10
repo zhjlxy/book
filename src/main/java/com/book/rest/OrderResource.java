@@ -1,10 +1,16 @@
 package com.book.rest;
 
+import com.alibaba.fastjson.JSONObject;
 import com.book.bo.Message;
 import com.book.bo.Status;
+import com.book.service.OrderService;
+import com.book.vo.OrderVo;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -14,11 +20,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/order")
 public class OrderResource {
 
+    @Autowired
+    private OrderService orderService;
+
     private Logger logger = Logger.getLogger(OrderResource.class);
-    public @ResponseBody Message addOrder(){
+    @RequestMapping(method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message addOrder(OrderVo vo){
         Message msg = new Message();
         try{
-
+            boolean result = orderService.addOrder(vo);
+            JSONObject json = new JSONObject();
+            json.put("result",result);
+            msg.setData(json.toString());
         }catch (Exception e){
             msg.setStatus(Status.ERROR);
             msg.setStatusMsg(e.getMessage());

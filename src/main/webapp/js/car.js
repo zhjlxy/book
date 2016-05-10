@@ -24,6 +24,10 @@ function  init() {
                     +"</div>");
                     $("#contxt").append("<hr/>");
                 }
+                $("#contxt").append("<div class=\"row\">"
+                +"<div class=\"col-md-10 col-md-offset-8\">"
+                +"<button class=\"btn btn-primary\" onclick=\"order()\">下单</button>"
+                +"</div></div>");
             }
         }else{
             alert(date.statusMsg);
@@ -44,4 +48,8 @@ function del(id) {
             alert(data.statusMsg);
         }
     });
+}
+
+function order() {
+    alert("下单");
 }
