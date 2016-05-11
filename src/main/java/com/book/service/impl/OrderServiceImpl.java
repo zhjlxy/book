@@ -2,8 +2,10 @@ package com.book.service.impl;
 
 import com.book.common.Car;
 import com.book.dao.OrderDao;
+import com.book.dao.OrderInfoDao;
 import com.book.entity.Book;
 import com.book.entity.Order;
+import com.book.entity.OrderInfo;
 import com.book.service.OrderService;
 import com.book.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +25,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDao orderDao;
+
+    @Autowired
+    private OrderInfoDao orderInfoDao;
 
     @Autowired
     private HttpSession session;
@@ -45,9 +51,33 @@ public class OrderServiceImpl implements OrderService {
         // 订单
         Order order = getOrder(myCar,vo);
         // 订单详情
-        //TODO
+        List<OrderInfo> orderInfos = getOrderInfo(myCar,order);
 
-        return false;
+        // 保存订单
+        orderDao.save(order);
+        // 保存订单详情
+        for(OrderInfo oi : orderInfos){
+            orderInfoDao.save(oi);
+        }
+        return true;
+    }
+
+    /**
+     * 根据购物车构建订单详情
+     * @param myCar 购物车
+     * @return 订单详情集合
+     */
+    private List<OrderInfo> getOrderInfo(List<Book> myCar,Order order) {
+        List<OrderInfo> orderInfos = new ArrayList<OrderInfo>();
+        for(Book book : myCar){
+            OrderInfo oi = new OrderInfo();
+            oi.setId(UUID.randomUUID().toString().replaceAll("-",""));
+            oi.setBookId(book.getId());
+            oi.setOrderId(order.getId());
+            orderInfos.add(oi);
+        }
+
+        return orderInfos;
     }
 
     /**
@@ -63,6 +93,10 @@ public class OrderServiceImpl implements OrderService {
         order.setBookNum(myCar.size());
         order.setTotal(getTotalByCar(myCar));
         order.setStatus(Order.NON_PAYMENT);
+        order.setAddress(vo.getAddress());
+        order.setTel(vo.getTel());
+        order.setRemarks(vo.getRemarks());
+        order.setBuyUser((String) session.getAttribute(UserServiceImpl.USERID));
         return order;
     }
 

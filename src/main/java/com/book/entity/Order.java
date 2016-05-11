@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by lixuy on 2016/5/10.
  */
-@Table(name="order")
+@Table(name="[order]")
 @Entity
 public class Order {
 
@@ -27,7 +27,7 @@ public class Order {
     private double total;
 
     @Column(name="buy_user")
-    private int buyUser;
+    private String buyUser;
 
     @Column(name="address")
     private String address;
@@ -35,13 +35,13 @@ public class Order {
     @Column(name="tel")
     private String tel;
 
-    @Column(name="name")
+    @Column(name="[name]")
     private String name;
 
     @Column(name="remarks")
     private String remarks;
 
-    @Column(name="status")
+    @Column(name="[status]")
     private String status;
 
     @Column(name = "uts")
@@ -74,11 +74,11 @@ public class Order {
         this.total = total;
     }
 
-    public int getBuyUser() {
+    public String getBuyUser() {
         return buyUser;
     }
 
-    public void setBuyUser(int buyUser) {
+    public void setBuyUser(String buyUser) {
         this.buyUser = buyUser;
     }
 

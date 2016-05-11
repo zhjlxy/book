@@ -51,5 +51,5 @@ function del(id) {
 }
 
 function order() {
-    alert("下单");
+    location.href = "order.html";
 }

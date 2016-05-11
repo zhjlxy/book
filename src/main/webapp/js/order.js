@@ -24,6 +24,6 @@ function sub() {
     
     
     request.ajax("POST","/order",json,function(data){
-        alert(data);
+        alert(data.data);
     });
 }
