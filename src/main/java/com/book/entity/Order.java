@@ -32,6 +32,15 @@ public class Order {
     @Column(name="address")
     private String address;
 
+    @Column(name="tel")
+    private String tel;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="remarks")
+    private String remarks;
+
     @Column(name="status")
     private String status;
 
@@ -79,6 +88,30 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
     public String getStatus() {

@@ -82,5 +82,33 @@ insert into `book_type` (`desc`, `cts`) values('文学','2016-04-27 17:36:31');
 insert into `book_type` (`desc`, `cts`) values('历史','2016-04-27 17:36:39');
 insert into `book_type` (`desc`, `cts`) values('外国','2016-04-27 17:36:51');
 
+-- 订单表
+CREATE TABLE `order` (
+  `id` varchar(100) NOT NULL,
+  `book_num` int(11) NOT NULL COMMENT '数量',
+  `total` double NOT NULL COMMENT '总计',
+  `buy_user` int(11) NOT NULL COMMENT '购买人',
+  `address` varchar(255) NOT NULL COMMENT '收货地址',
+  `tel` varchar(11) NOT NULL COMMENT '收货人电话',
+  `name` varchar(100) NOT NULL COMMENT '收货人姓名',
+  `remarks` varchar(1000) DEFAULT NULL COMMENT '备注',
+  `status` varchar(2) NOT NULL COMMENT '状态',
+  `uts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 订单详情表
+CREATE TABLE `order_info` (
+  `id` varchar(100) NOT NULL,
+  `order_id` varchar(100) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `uts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 
 

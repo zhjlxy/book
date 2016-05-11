@@ -11,6 +11,8 @@ public class OrderVo {
 
     private String tel;
 
+    private String remarks;
+
     public String getName() {
         return name;
     }
@@ -33,5 +35,13 @@ public class OrderVo {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

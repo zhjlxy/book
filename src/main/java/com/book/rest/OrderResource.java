@@ -29,9 +29,7 @@ public class OrderResource {
         Message msg = new Message();
         try{
             boolean result = orderService.addOrder(vo);
-            JSONObject json = new JSONObject();
-            json.put("result",result);
-            msg.setData(json.toString());
+            msg.setData("下单成功！");
         }catch (Exception e){
             msg.setStatus(Status.ERROR);
             msg.setStatusMsg(e.getMessage());
