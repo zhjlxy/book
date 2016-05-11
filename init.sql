@@ -83,6 +83,7 @@ insert into `book_type` (`desc`, `cts`) values('历史','2016-04-27 17:36:39');
 insert into `book_type` (`desc`, `cts`) values('外国','2016-04-27 17:36:51');
 
 -- 订单表
+DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` varchar(100) NOT NULL,
   `book_num` int(11) NOT NULL COMMENT '数量',
@@ -99,6 +100,7 @@ CREATE TABLE `order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 订单详情表
+DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE `order_info` (
   `id` varchar(100) NOT NULL,
   `order_id` varchar(100) NOT NULL,

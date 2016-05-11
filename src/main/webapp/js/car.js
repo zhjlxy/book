@@ -17,7 +17,7 @@ function  init() {
                 $("#contxt").append("<hr/>");
                 for(var i=0;i<arr.length; i++){
                     var json = arr[i];
-                    $("#contxt").append("<div class=\"row\"><div class=\"col-lg-2\"> <img src=\"../img"+json.picture+"\"></div>"
+                    $("#contxt").append("<div class=\"row\"><div class=\"col-lg-2\"> <img src=\"../img"+json.picture+"\" style=\"height: 50px\"></div>"
                     +"<div  class=\"col-xs-2\"><span>"+json.name+"</span></div>"
                     +"<div  class=\"col-xs-2\"><span>"+json.price+"</span></div>"
                     +"<div  class=\"col-xs-2 col-xs-offset-2\"><a href='javascript:void(0)' onclick='del("+json.id+")'>删除</a></div>"

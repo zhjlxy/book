@@ -97,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTel(vo.getTel());
         order.setRemarks(vo.getRemarks());
         order.setBuyUser((String) session.getAttribute(UserServiceImpl.USERID));
+        order.setName(vo.getName());
         return order;
     }
 
