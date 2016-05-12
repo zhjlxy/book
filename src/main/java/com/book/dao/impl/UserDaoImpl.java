@@ -21,7 +21,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
     @Override
     public List<User> list() {
-         List<User> result = getCurrentSession().createQuery("from Book").list();
+         List<User> result = getCurrentSession().createQuery("from User").list();
         return result;
     }
 

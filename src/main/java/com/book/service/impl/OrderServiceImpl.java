@@ -1,12 +1,16 @@
 package com.book.service.impl;
 
 import com.book.common.Car;
+import com.book.common.Dateutil;
+import com.book.dao.BookDao;
 import com.book.dao.OrderDao;
 import com.book.dao.OrderInfoDao;
 import com.book.entity.Book;
 import com.book.entity.Order;
 import com.book.entity.OrderInfo;
 import com.book.service.OrderService;
+import com.book.service.UserService;
+import com.book.vo.OrderListVo;
 import com.book.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +34,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderInfoDao orderInfoDao;
 
     @Autowired
+    private BookDao bookDao;
+
+    @Autowired
     private HttpSession session;
 
     @Autowired
@@ -43,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackOn=Exception.class)
     public boolean addOrder(OrderVo vo) {
 
-        String userId = (String) session.getAttribute("userId");
+        String userId = (String) session.getAttribute(UserServiceImpl.USERID);
         List<Book> myCar =  car.getCar(userId);
         if(myCar == null || myCar.isEmpty()){
             throw new RuntimeException("购物车信息为空！！");
@@ -60,6 +67,71 @@ public class OrderServiceImpl implements OrderService {
             orderInfoDao.save(oi);
         }
         return true;
+    }
+
+    /**
+     * 获取订单详情
+     * @return
+     */
+    @Override
+    public List<OrderListVo> list() {
+        //TODO 用户订单列表
+        String userId = (String) session.getAttribute(UserServiceImpl.USERID);
+        List<Order> orders = orderDao.getByUserId(userId);
+
+        return getOrderListVo(orders);
+    }
+
+    private List<OrderListVo> getOrderListVo(List<Order> orders) {
+        List<OrderListVo> olv = new ArrayList<>();
+        if(orders == null || orders.isEmpty()){
+            return olv;
+        }
+        for(Order order : orders){
+            List<OrderInfo> orderInfos =  orderInfoDao.getByOrderId(order.getId());
+            List<Book> bookList = getBookListByOrderInfos(orderInfos);
+            OrderListVo orderListVo =  buildOrderListBo(bookList, order);
+            olv.add(orderListVo);
+        }
+
+        return olv;
+    }
+
+
+    private OrderListVo buildOrderListBo(List<Book> bookList, Order order) {
+        OrderListVo olv = new OrderListVo();
+        olv.setId(order.getId());
+        olv.setStatus(order.getStatus());
+        olv.setTotal(order.getTotal());
+        olv.setBookNum(order.getBookNum());
+        olv.setAddress(order.getAddress());
+        olv.setBuyUser(order.getBuyUser());
+        olv.setName(order.getName());
+        olv.setRemarks(order.getRemarks());
+        olv.setTel(order.getTel());
+        olv.setCts(Dateutil.DateToStr(order.getCts()));
+        olv.setBookList(bookList);
+
+        return olv;
+    }
+
+    /**
+     * 根据orderInfos查询book信息
+     * @param orderInfos
+     * @return
+     */
+    private List<Book> getBookListByOrderInfos(List<OrderInfo> orderInfos) {
+        List<Book> books = new ArrayList<>();
+        if(orderInfos == null || orderInfos.isEmpty()){
+            return books;
+        }
+        for(OrderInfo oi : orderInfos){
+            Book book = bookDao.get(oi.getBookId());
+            if(book !=null){
+                books.add(book);
+            }
+        }
+        return books;
     }
 
     /**

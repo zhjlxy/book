@@ -24,6 +24,11 @@ function sub() {
     
     
     request.ajax("POST","/order",json,function(data){
-        alert(data.data);
+        if(data.status=="SUCCESS0"){
+            var json = $.parseJSON(data.data);
+            alert(json.result);
+        }else{
+            alert(data.statusMsg);
+        }
     });
 }

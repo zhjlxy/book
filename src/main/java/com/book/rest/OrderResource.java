@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.book.bo.Message;
 import com.book.bo.Status;
 import com.book.service.OrderService;
+import com.book.vo.OrderListVo;
 import com.book.vo.OrderVo;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * Created by lixuy on 2016/5/2.
@@ -30,7 +33,10 @@ public class OrderResource {
         Message msg = new Message();
         try{
             boolean result = orderService.addOrder(vo);
-            msg.setData("下单成功！");
+            msg.setStatus(Status.SUCCESS);
+            JSONObject json = new JSONObject();
+            json.put("result","下单成功！");
+            msg.setData(json.toString());
         }catch (Exception e){
             msg.setStatus(Status.ERROR);
             msg.setStatusMsg(e.getMessage());
@@ -38,5 +44,20 @@ public class OrderResource {
         }
 
         return msg;
+    }
+
+    @RequestMapping(method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message list(){
+        Message msg = new Message();
+        try{
+            List<OrderListVo> orderListVos =  orderService.list();
+            msg.setStatus(Status.SUCCESS);
+            msg.setData(JSONObject.toJSONString(orderListVos));
+        }catch (Exception e){
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+            logger.error(e, e);
+        }
+        return  msg;
     }
 }

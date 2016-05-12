@@ -2,6 +2,7 @@ package com.book.dao.impl;
 
 import com.book.dao.OrderInfoDao;
 import com.book.entity.OrderInfo;
+import org.hibernate.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -37,5 +38,17 @@ public class OrderInfoDaoImpl extends BaseDaoImpl implements OrderInfoDao {
         if(orderInfo != null){
             getCurrentSession().delete(orderInfo);
         }
+    }
+
+    /**
+     * 根据orderId 查询orderInfo
+     * @param orderId 订单id
+     * @return
+     */
+    @Override
+    public List<OrderInfo> getByOrderId(String orderId) {
+        Query query = getCurrentSession().createQuery("from OrderInfo where  orderId = :orderId");
+        query.setString("orderId", orderId);
+        return query.list();
     }
 }
