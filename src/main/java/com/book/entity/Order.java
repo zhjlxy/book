@@ -14,8 +14,11 @@ import java.util.Date;
 public class Order {
 
     public static final String NON_PAYMENT="N";
+    public static final String NON_PAYMENT_DESC="待付款";
     public static final String FINISH = "F";
+    public static final String FINISH_DESC= "完成";
     public static final String DEL ="D";
+    public static final String DEL_DESC ="撤销";
     @Id
     @Column(name="id")
     private String id;

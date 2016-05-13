@@ -5,6 +5,7 @@ var rowSize = 4;
 $(document).ready(function () {
     // 添加欢迎语
     addUserName();
+    carNum();
     initType();
     getData(1,"");
 });

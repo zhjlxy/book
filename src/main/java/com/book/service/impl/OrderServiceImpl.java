@@ -9,9 +9,9 @@ import com.book.entity.Book;
 import com.book.entity.Order;
 import com.book.entity.OrderInfo;
 import com.book.service.OrderService;
-import com.book.service.UserService;
 import com.book.vo.OrderListVo;
 import com.book.vo.OrderVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +66,11 @@ public class OrderServiceImpl implements OrderService {
         for(OrderInfo oi : orderInfos){
             orderInfoDao.save(oi);
         }
+
+        // 删除购物车中信息
+        car.delCar(userId);
+
+
         return true;
     }
 
@@ -80,6 +85,25 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderDao.getByUserId(userId);
 
         return getOrderListVo(orders);
+    }
+
+    /**
+     *  更新订单状态
+     * @param vo
+     */
+    @Override
+    public void updateStatus(OrderVo vo) {
+        if(vo == null || StringUtils.isBlank(vo.getId())){
+            new RuntimeException("paramter error!");
+        }
+        Order order = orderDao.get(vo.getId());
+        if(order != null){
+            if(!order.getStatus().equalsIgnoreCase(vo.getStatus())){
+                order.setStatus(vo.getStatus().toUpperCase());
+                orderDao.saveOrUpdate(order);
+            }
+        }
+
     }
 
     private List<OrderListVo> getOrderListVo(List<Order> orders) {
@@ -102,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
         OrderListVo olv = new OrderListVo();
         olv.setId(order.getId());
         olv.setStatus(order.getStatus());
+        olv.setStatusDesc(getOrderStatusDescByStatus(order.getStatus()));
         olv.setTotal(order.getTotal());
         olv.setBookNum(order.getBookNum());
         olv.setAddress(order.getAddress());
@@ -113,6 +138,19 @@ public class OrderServiceImpl implements OrderService {
         olv.setBookList(bookList);
 
         return olv;
+    }
+
+    private String getOrderStatusDescByStatus(String status){
+        if(Order.NON_PAYMENT.equalsIgnoreCase(status)){
+            return Order.NON_PAYMENT_DESC;
+        }else if(Order.FINISH.equalsIgnoreCase(status)){
+            return Order.FINISH_DESC;
+        }else if(Order.DEL.equalsIgnoreCase(status)){
+            return Order.DEL_DESC;
+        }
+
+        return StringUtils.EMPTY;
+
     }
 
     /**

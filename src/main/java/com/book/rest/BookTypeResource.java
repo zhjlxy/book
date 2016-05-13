@@ -1,6 +1,7 @@
 package com.book.rest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.book.bo.Message;
 import com.book.bo.Status;
 import com.book.entity.BookType;
@@ -33,7 +34,7 @@ public class BookTypeResource {
             String json = "[]";
             List<BookType> list = bookTypeService.list();
             if(list != null){
-                json = JSONObject.toJSONString(list);
+                json = JSONObject.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect);
             }
             msg.setData(json);
             msg.setStatus(Status.SUCCESS);

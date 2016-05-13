@@ -39,13 +39,12 @@ function addCar() {
     request.ajax("GET","car/add?book_id="+id,"",function successFn(data){
         if(data.status=="SUCCESS"){
             carNum();
-            alert("添加成功!");
+            location.href = "car.html";
         }else{
             var msg = data.statusMsg;
             if( msg == ""){
                 msg ="error";
             }
-            alert(msg);
         }
     });
 }

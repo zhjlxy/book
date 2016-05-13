@@ -22,3 +22,23 @@ function addUserName(){
         $("#welcomeLab").html(userName);
     });
 }
+
+/**
+ * 填充页面中购物车数量
+ */
+function carNum(){
+    request.ajax("GET","car/list","",function successFn(data){
+        if(data.status=="SUCCESS"){
+            var json = $.parseJSON(data.data);
+            if(json !== null && json.length>0){
+                $("#carNum").html("+"+json.length);
+            }
+        }else{
+            var msg = data.statusMsg;
+            if( msg == ""){
+                msg ="error";
+            }
+            alert(msg);
+        }
+    });
+}

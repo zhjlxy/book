@@ -48,4 +48,14 @@ public class Car {
     public List<Book> getCar(String userId){
         return catMap.get(userId);
     }
+
+    /**
+     * 删除用户的购物车
+     * @param userId
+     */
+    public void delCar(String userId){
+        if(StringUtils.isNotBlank(userId)){
+            catMap.remove(userId);
+        }
+    }
 }

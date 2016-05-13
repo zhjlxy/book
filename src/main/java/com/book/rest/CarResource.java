@@ -1,6 +1,7 @@
 package com.book.rest;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.book.bo.Message;
 import com.book.bo.Status;
 import com.book.common.Car;
@@ -49,7 +50,7 @@ public class CarResource {
         Message msg  = new Message();
         try{
             List<Book> car = carService.getCar();
-            msg.setData(JSONArray.toJSONString(car));
+            msg.setData(JSONArray.toJSONString(car, SerializerFeature.DisableCircularReferenceDetect));
             msg.setStatus(Status.SUCCESS);
         }catch (Exception e){
             msg.setStatus(Status.ERROR);

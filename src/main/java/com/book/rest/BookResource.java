@@ -2,6 +2,7 @@ package com.book.rest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.book.bo.Message;
 import com.book.bo.Status;
 import com.book.entity.Book;
@@ -64,7 +65,7 @@ public class BookResource {
         int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
         vo.setCount(count);
         vo.setPageNum(pageNum);
-        vo.setData(JSONArray.toJSONString(list));
+        vo.setData(JSONArray.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect));
         vo.setFlag(true);
 
         return  vo;

@@ -47,7 +47,7 @@ public class OrderDaoImpl extends BaseDaoImpl implements OrderDao {
      */
     @Override
     public List<Order> getByUserId(String userId) {
-        Query query = getCurrentSession().createQuery("from Order where buyUser =:userId");
+        Query query = getCurrentSession().createQuery("from Order where buyUser =:userId order by uts desc");
         query.setString("userId", userId);
         return  query.list();
     }

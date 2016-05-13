@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     // 添加欢迎语
     addUserName();
+    carNum();
     var bookId = url_util.queryString("bookId");
     if(bookId!=null) {
         // 修改

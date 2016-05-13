@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     // 添加欢迎语
     addUserName();
+    carNum();
 });
 
 /**
@@ -24,9 +25,9 @@ function sub() {
     
     
     request.ajax("POST","/order",json,function(data){
-        if(data.status=="SUCCESS0"){
+        if(data.status=="SUCCESS"){
             var json = $.parseJSON(data.data);
-            alert(json.result);
+            location.href="orderList.html"
         }else{
             alert(data.statusMsg);
         }

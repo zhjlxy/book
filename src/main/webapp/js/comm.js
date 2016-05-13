@@ -145,21 +145,3 @@ function changeNavActive(obj){
     $(obj).parent().parent().children().removeClass("active");
     $(obj).parent().addClass("active");
 }
-
-/**
- * 填充页面中购物车数量
- */
-function carNum(){
-    request.ajax("GET","car/list","",function successFn(data){
-        if(data.status=="SUCCESS"){
-            var json = $.parseJSON(data.data);
-            $("#carNum").html("+"+json.length);
-        }else{
-            var msg = data.statusMsg;
-            if( msg == ""){
-                msg ="error";
-            }
-            alert(msg);
-        }
-    });
-}

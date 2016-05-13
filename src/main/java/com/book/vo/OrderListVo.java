@@ -26,6 +26,8 @@ public class OrderListVo {
 
     private String status;
 
+    private String statusDesc;
+
     private String cts;
 
     private List<Book> bookList;
@@ -100,6 +102,14 @@ public class OrderListVo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
     }
 
     public String getCts() {

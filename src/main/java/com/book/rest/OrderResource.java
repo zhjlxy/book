@@ -1,8 +1,10 @@
 package com.book.rest;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.book.bo.Message;
 import com.book.bo.Status;
+import com.book.entity.Order;
 import com.book.service.OrderService;
 import com.book.vo.OrderListVo;
 import com.book.vo.OrderVo;
@@ -52,12 +54,48 @@ public class OrderResource {
         try{
             List<OrderListVo> orderListVos =  orderService.list();
             msg.setStatus(Status.SUCCESS);
-            msg.setData(JSONObject.toJSONString(orderListVos));
+            msg.setData(JSONObject.toJSONString(orderListVos, SerializerFeature.DisableCircularReferenceDetect));
         }catch (Exception e){
             msg.setStatus(Status.ERROR);
             msg.setStatusMsg(e.getMessage());
             logger.error(e, e);
         }
         return  msg;
+    }
+
+    @RequestMapping(value = "/update_status", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message updateStatus(@RequestBody OrderVo vo){
+        Message msg = new Message();
+        try{
+            if(!checkStatus(vo.getStatus())){
+                msg.setStatus(Status.ERROR);
+                msg.setStatusMsg("status error!");
+                return msg;
+            }
+            orderService.updateStatus(vo);
+
+            msg.setStatus(Status.SUCCESS);
+        }catch (Exception e){
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+            logger.error(e, e);
+
+        }
+
+        return msg;
+    }
+
+    /**
+     *
+     */
+    private boolean checkStatus(String status){
+        if(Order.DEL.equalsIgnoreCase(status)){
+            return true;
+        }
+
+        if(Order.FINISH.equalsIgnoreCase(status)){
+            return true;
+        }
+        return  false;
     }
 }

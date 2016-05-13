@@ -12,4 +12,6 @@ public interface OrderService {
     public boolean addOrder(OrderVo vo);
 
     public List<OrderListVo> list();
+
+    public void updateStatus(OrderVo vo);
 }
