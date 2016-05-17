@@ -51,4 +51,9 @@ public class OrderInfoDaoImpl extends BaseDaoImpl implements OrderInfoDao {
         query.setString("orderId", orderId);
         return query.list();
     }
+
+    @Override
+    public String getBaseSql() {
+        return "from OrderInfo";
+    }
 }

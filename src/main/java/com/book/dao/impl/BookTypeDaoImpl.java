@@ -41,4 +41,9 @@ public class BookTypeDaoImpl extends BaseDaoImpl implements BookTypeDao {
             getCurrentSession().delete(bookType);
         }
     }
+
+    @Override
+    public String getBaseSql() {
+        return "from BookType";
+    }
 }

@@ -88,4 +88,8 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         }
     }
 
+    @Override
+    public String getBaseSql() {
+        return "from Book";
+    }
 }

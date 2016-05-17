@@ -1,4 +1,4 @@
-package com.book.rest;
+    package com.book.rest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -103,7 +103,6 @@ public class BookResource {
         Message msg = new Message();
         try{
 
-            System.out.println(JSONObject.toJSONString(bookVo));
             int bookId = bookService.saveOrUpdate(bookVo);
             JSONObject json = new JSONObject();
             json.put("Id",bookId);
@@ -116,5 +115,20 @@ public class BookResource {
         }
 
         return msg;
+    }
+
+    @RequestMapping(value = "/sell_book",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody PageResultVo querySellBook(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum){
+        PageResultVo vo = new PageResultVo(true);
+
+        List<Book> list =  bookService.querySellBook(pageSize, pageNum);
+        int total = bookService.querySellBookTotal();
+        int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
+        vo.setCount(count);
+        vo.setPageNum(pageNum);
+        vo.setData(JSONArray.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect));
+        vo.setFlag(true);
+
+        return vo;
     }
 }

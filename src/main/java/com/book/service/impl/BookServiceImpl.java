@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lixuy on 2016/4/16.
@@ -61,6 +63,26 @@ public class BookServiceImpl  implements BookService{
         }
     }
 
+    @Override
+    public List<Book> querySellBook(int pageSize, int pageNum) {
+        Map<String, Object> criteria = getSellUserCriteria();
+        int firstNum = pageSize*(pageNum-1);
+        List<Book> result = bookDao.queryWithPage(firstNum, pageSize, criteria);
+        return result;
+    }
+
+    private Map<String, Object> getSellUserCriteria() {
+        String userId = (String) session.getAttribute("userId");
+        Map<String, Object> criteria = new HashMap<String, Object>();
+        criteria.put("sellUserId", userId);
+        return criteria;
+    }
+
+    @Override
+    public int querySellBookTotal() {
+        return bookDao.queryTotal(getSellUserCriteria());
+    }
+
     private Book voToEntity(BookVo bookVo) {
         Book book = new Book();
         book.setAuthor(bookVo.getAuthor());
@@ -77,7 +99,6 @@ public class BookServiceImpl  implements BookService{
 
         // 用户
         String userId = (String) session.getAttribute("userId");
-        userId = "123";
         book.setSellUserId(userId);
         book.setSellStatus(Book.SELL_IN);
 

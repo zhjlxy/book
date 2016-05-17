@@ -17,4 +17,8 @@ public interface BookService {
     public BookVo getById(int id);
 
     public int saveOrUpdate(BookVo bookVo);
+
+    public List<Book> querySellBook(int pageSize, int pageNum);
+
+    public int querySellBookTotal();
 }

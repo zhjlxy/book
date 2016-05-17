@@ -16,9 +16,9 @@ public class Order {
     public static final String NON_PAYMENT="N";
     public static final String NON_PAYMENT_DESC="待付款";
     public static final String FINISH = "F";
-    public static final String FINISH_DESC= "完成";
+    public static final String FINISH_DESC= "已完成";
     public static final String DEL ="D";
-    public static final String DEL_DESC ="撤销";
+    public static final String DEL_DESC ="已撤消";
     @Id
     @Column(name="id")
     private String id;

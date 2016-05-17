@@ -22,6 +22,10 @@ public class Book implements Serializable {
 
     /**已下架*/
     public static final String SELL_OFF = "off";
+    /**待审核*/
+    public static final String SELL_AUDIT = "audit";
+    /** 审核失败*/
+    public static final String SELL_AUDIT_FAIL= "audit_fail";
 
 
     @Id

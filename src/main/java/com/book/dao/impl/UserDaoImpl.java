@@ -76,4 +76,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         }
         return users.get(0);
     }
+
+    @Override
+    public String getBaseSql() {
+        return "from User";
+    }
 }

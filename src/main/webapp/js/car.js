@@ -15,6 +15,7 @@ function  init() {
             if(arr.length>0){
                 $("#contxt").empty();
                 $("#contxt").append("<hr/>");
+                var total = 0;
                 for(var i=0;i<arr.length; i++){
                     var json = arr[i];
                     $("#contxt").append("<div class=\"row\"><div class=\"col-lg-2\"> <img src=\"../img"+json.picture+"\" style=\"height: 50px\"></div>"
@@ -23,7 +24,13 @@ function  init() {
                     +"<div  class=\"col-xs-2 col-xs-offset-2\"><a href='javascript:void(0)' onclick='del("+json.id+")'>删除</a></div>"
                     +"</div>");
                     $("#contxt").append("<hr/>");
+                    total = Number(total)+Number(json.price);
                 }
+                $("#contxt").append("<div class=\"row\">"
+                    +"<div class=\"col-md-10 col-md-offset-8\">"
+                    +"<strong>共"+arr.length+"本书 总价"+total+"元</strong>"
+                    +"</div></div>");
+
                 $("#contxt").append("<div class=\"row\">"
                 +"<div class=\"col-md-10 col-md-offset-8\">"
                 +"<button class=\"btn btn-primary\" onclick=\"order()\">下单</button>"

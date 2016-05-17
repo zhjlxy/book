@@ -13,7 +13,8 @@ $(document).ready(function () {
                 var json = jsonArr[i]
                 var doStr = "";
                 if("N" == json.status){
-                    doStr="<td><a href=\"javascript:void(0)\" onclick=\"finishOrder('"+json.id+"')\">付款</a></td>"
+                    doStr="<td><a href=\"javascript:void(0)\" onclick=\"finishOrder('"+json.id+"')\">付款</a>" +
+                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0)\" onclick=\"delOrder('"+json.id+"')\">撤消</a></td>"
                 }
                 $("#contxt").append("<table class=\"table table-bordered table-condensed text-center\">"
                 +"<tr><th colspan='5'>"+json.cts+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单号:"+json.id+"</th></tr>"
@@ -32,11 +33,29 @@ $(document).ready(function () {
 });
 
 function  finishOrder(orderId) {
-    alert(orderId);
     var json={
         "id":orderId,
         "status":"F"
-    }
+    };
+    request.ajax("POST","order/update_status", json,function(data){
+        if(data.status=="SUCCESS"){
+            location.href="orderList.html";
+        }else{
+            alert(data.statusMsg);
+        }
+    });
+}
+
+/**
+ * 取消订单
+ * @param orderId
+ */
+function delOrder(orderId) {
+    var json={
+        "id":orderId,
+        "status":"D"
+    };
+
     request.ajax("POST","order/update_status", json,function(data){
         if(data.status=="SUCCESS"){
             location.href="orderList.html";
