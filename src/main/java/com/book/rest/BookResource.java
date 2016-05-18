@@ -134,6 +134,20 @@ public class BookResource {
         return vo;
     }
 
+    @RequestMapping(value = "/auth_book",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody PageResultVo queryAuthBook(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum){
+        PageResultVo vo = new PageResultVo(true);
+
+        List<BookListVo> list =  bookService.queryAuthBook(pageSize, pageNum);
+        int total = bookService.queryAuthBookTotal();
+        int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
+        vo.setCount(count);
+        vo.setPageNum(pageNum);
+        vo.setData(JSONArray.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect));
+        vo.setFlag(true);
+
+        return vo;
+    }
     @RequestMapping(value="/update_sell_status")
     public @ResponseBody Message updateSellStatus(@RequestParam("bookId") int bookId, @RequestParam("sellStatus") String sellStatus){
         Message msg = new Message();

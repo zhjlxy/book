@@ -152,6 +152,27 @@ public class BookServiceImpl  implements BookService{
         bookDao.saveOrUpdate(book);
     }
 
+    @Override
+    public List<BookListVo> queryAuthBook(int pageSize, int pageNum) {
+        Map<String, Object> criteria = getAuthUserCriteria();
+        int firstNum = pageSize*(pageNum-1);
+        List<Book> result = bookDao.queryWithPage(firstNum, pageSize, criteria);
+        List<BookListVo> bookListVos = toBookListVoList(result);
+
+        return bookListVos;
+    }
+
+    private Map<String,Object> getAuthUserCriteria() {
+        Map<String,Object> criteria = new HashMap<String, Object>();
+        criteria.put("sellStatus", Book.SELL_AUDIT);
+        return criteria;
+    }
+
+    @Override
+    public int queryAuthBookTotal() {
+        return bookDao.queryTotal(getAuthUserCriteria());
+    }
+
     /**
      * 校验更新状态
      * @param sellStatus
@@ -180,7 +201,7 @@ public class BookServiceImpl  implements BookService{
         // 用户
         String userId = (String) session.getAttribute("userId");
         book.setSellUserId(userId);
-        book.setSellStatus(Book.SELL_IN);
+        book.setSellStatus(Book.SELL_AUDIT);
 
         return book;
     }

@@ -24,4 +24,8 @@ public interface BookService {
     public int querySellBookTotal();
 
     public void updateSellStatus(int bookId, String sellStatus);
+
+    public List<BookListVo> queryAuthBook(int pageSize, int pageNum);
+
+    public int queryAuthBookTotal();
 }
