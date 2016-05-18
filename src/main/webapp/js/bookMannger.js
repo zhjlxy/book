@@ -44,10 +44,27 @@ function getSellBook(pageNum) {
 function addSellBookInfo(jsonArr) {
     if(jsonArr.length>0){
         $("#bookInfo").empty();
-        $("#bookInfo").append("<tr><th class='text-center'>序号</th><th class='text-center'>图片</th><th class='text-center'>名字</th><th class='text-center'>售价</th><th class='text-center'>状态<th class='text-center'>操作</th></tr>");
+        $("#bookInfo").append("<tr><th class='text-center'>序号</th><th class='text-center'>图片</th><th class='text-center'>名字</th><th class='text-center'>售价</th><th class='text-center'>状态<th class='text-center'>操作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"addbook.html\">添加</a></th></tr>");
         for(var i=0; i<jsonArr.length; i++){
             var json = jsonArr[i];
-            $("#bookInfo").append("<tr><td>"+eval(i+1)+"</td><td><img style=\"height: 25px\" src=\"../img"+json.picture+"\"></td><td>"+json.name+"</td><td>"+json.price+"</td><td>"+json.status+"<td><a>下架</a></td></tr>")
+            var actionStr ;
+            if(json.sellStatus == "in"){
+                actionStr = "<a href='javascript:void(0)' onclick=\"updateSellStatus('off','"+json.id+"')\">下架</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                +"<a href=\"addbook.html?bookId="+json.id+"\">修改</a>";
+            }else if(json.sellStatus == "off"){
+                actionStr = "<a href=\"addbook.html?bookId="+json.id+"\">修改</a>";
+            }
+            $("#bookInfo").append("<tr><td>"+eval(i+1)+"</td><td><img style=\"height: 25px\" src=\"../img"+json.picture+"\"></td><td>"+json.name+"</td><td>"+json.price+"</td><td>"+json.sellStatusDesc+"<td>"+actionStr+"</td></tr>")
         }
     }
+}
+
+function updateSellStatus(status, bookId) {
+    request.ajax("GET","book/update_sell_status?sellStatus="+status+"&bookId="+bookId,"",function successFn(data){
+        if(data.status=="SUCCESS"){
+            location.href="bookMannger.html";
+        }else{
+            alert(data.statusMsg);
+        }
+    });
 }

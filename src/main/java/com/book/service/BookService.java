@@ -1,6 +1,7 @@
 package com.book.service;
 
 import com.book.entity.Book;
+import com.book.vo.BookListVo;
 import com.book.vo.BookVo;
 
 import java.util.List;
@@ -18,7 +19,9 @@ public interface BookService {
 
     public int saveOrUpdate(BookVo bookVo);
 
-    public List<Book> querySellBook(int pageSize, int pageNum);
+    public List<BookListVo> querySellBook(int pageSize, int pageNum);
 
     public int querySellBookTotal();
+
+    public void updateSellStatus(int bookId, String sellStatus);
 }

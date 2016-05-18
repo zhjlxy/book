@@ -3,11 +3,14 @@ package com.book.service.impl;
 import com.book.dao.BookDao;
 import com.book.entity.Book;
 import com.book.service.BookService;
+import com.book.vo.BookListVo;
 import com.book.vo.BookVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +67,63 @@ public class BookServiceImpl  implements BookService{
     }
 
     @Override
-    public List<Book> querySellBook(int pageSize, int pageNum) {
+    public List<BookListVo> querySellBook(int pageSize, int pageNum) {
         Map<String, Object> criteria = getSellUserCriteria();
         int firstNum = pageSize*(pageNum-1);
         List<Book> result = bookDao.queryWithPage(firstNum, pageSize, criteria);
+        List<BookListVo> bookListVos = toBookListVoList(result);
+        return bookListVos;
+    }
+
+
+    private List<BookListVo> toBookListVoList(List<Book> result) {
+        List<BookListVo> bookListVos = new ArrayList<BookListVo>();
+        if(result!= null){
+            for(Book book : result){
+                BookListVo bookListVo = toBookListVo(book);
+                bookListVos.add(bookListVo);
+            }
+        }
+
+        return bookListVos;
+    }
+
+    private BookListVo toBookListVo(Book book) {
+        BookListVo blvo = new BookListVo();
+        blvo.setId(book.getId());
+        blvo.setName(book.getName());
+        blvo.setAuthor(book.getAuthor());
+        blvo.setDesc(book.getDesc());
+        blvo.setNewStatus(book.getNewStatus());
+        blvo.setPicture(book.getPicture());
+        blvo.setPrice(book.getPrice());
+        blvo.setSellStatus(book.getSellStatus());
+        blvo.setSellStatusDesc(getBookSellStatusDesc(book.getSellStatus()));
+        blvo.setSellUserId(book.getSellUserId());
+        blvo.setTypeId(book.getTypeId());
+
+
+        return blvo;
+    }
+
+    private String getBookSellStatusDesc(String bookSellStatus){
+        String result = StringUtils.EMPTY;
+        if(Book.SELL_IN.equalsIgnoreCase(bookSellStatus)){
+            result = Book.SELL_IN_DESC;
+        }
+        if(Book.SELL_AUDIT.equalsIgnoreCase(bookSellStatus)){
+            result = Book.SELL_AUDIT_DESC;
+        }
+        if(Book.SELL_AUDIT_FAIL.equalsIgnoreCase(bookSellStatus)){
+            result = Book.SELL_AUDIT_FAIL_DESC;
+        }
+        if(Book.SELL_OFF.equalsIgnoreCase(bookSellStatus)){
+            result = Book.SELL_OFF_DESC;
+        }
+        if(Book.SELL_OVER.equalsIgnoreCase(bookSellStatus)){
+            result = Book.SELL_OVER_DESC;
+        }
+
         return result;
     }
 
@@ -81,6 +137,30 @@ public class BookServiceImpl  implements BookService{
     @Override
     public int querySellBookTotal() {
         return bookDao.queryTotal(getSellUserCriteria());
+    }
+
+    /**
+     *  更新销售书本的状态
+     * @param bookId
+     * @param sellStatus
+     */
+    @Override
+    public void updateSellStatus(int bookId, String sellStatus) {
+        checkSellStatus(sellStatus);
+        Book book = bookDao.get(bookId);
+        book.setSellStatus(sellStatus);
+        bookDao.saveOrUpdate(book);
+    }
+
+    /**
+     * 校验更新状态
+     * @param sellStatus
+     */
+    private void checkSellStatus(String sellStatus) {
+        if(!Book.SELL_OFF.equalsIgnoreCase(sellStatus) && !Book.SELL_IN.equalsIgnoreCase(sellStatus)
+                && !Book.SELL_OVER.equalsIgnoreCase(sellStatus) && !Book.SELL_AUDIT.equalsIgnoreCase(sellStatus)){
+            new RuntimeException("sellStatus error");
+        }
     }
 
     private Book voToEntity(BookVo bookVo) {

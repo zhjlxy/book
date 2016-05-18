@@ -8,8 +8,10 @@ import com.book.bo.Status;
 import com.book.entity.Book;
 import com.book.service.BookService;
 import com.book.utils.FileUtils;
+import com.book.vo.BookListVo;
 import com.book.vo.BookVo;
 import com.book.vo.PageResultVo;
+import org.apache.commons.lang.StringUtils;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -121,7 +123,7 @@ public class BookResource {
     public @ResponseBody PageResultVo querySellBook(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum){
         PageResultVo vo = new PageResultVo(true);
 
-        List<Book> list =  bookService.querySellBook(pageSize, pageNum);
+        List<BookListVo> list =  bookService.querySellBook(pageSize, pageNum);
         int total = bookService.querySellBookTotal();
         int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
         vo.setCount(count);
@@ -130,5 +132,19 @@ public class BookResource {
         vo.setFlag(true);
 
         return vo;
+    }
+
+    @RequestMapping(value="/update_sell_status")
+    public @ResponseBody Message updateSellStatus(@RequestParam("bookId") int bookId, @RequestParam("sellStatus") String sellStatus){
+        Message msg = new Message();
+        try{
+            bookService.updateSellStatus(bookId, sellStatus);
+            msg.setStatus(Status.SUCCESS);
+        }catch (Exception e){
+            logger.error(e, e);
+            msg.setStatusMsg(e.getMessage());
+            msg.setStatus(Status.ERROR);
+        }
+        return msg;
     }
 }

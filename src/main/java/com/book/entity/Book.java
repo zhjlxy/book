@@ -16,16 +16,21 @@ public class Book implements Serializable {
 
     /** 销售中 */
     public static final String SELL_IN = "in";
+    public static final String SELL_IN_DESC = "热销中";
 
     /** 已卖出*/
     public static final String SELL_OVER = "over";
+    public static final String SELL_OVER_DESC = "已卖出";
 
     /**已下架*/
     public static final String SELL_OFF = "off";
+    public static final String SELL_OFF_DESC = "已下架";
     /**待审核*/
     public static final String SELL_AUDIT = "audit";
+    public static final String SELL_AUDIT_DESC = "待审核";
     /** 审核失败*/
     public static final String SELL_AUDIT_FAIL= "audit_fail";
+    public static final String SELL_AUDIT_FAIL_DESC= "审核失败";
 
 
     @Id
@@ -55,7 +60,7 @@ public class Book implements Serializable {
     private String newStatus;
 
     @Column(name="type_id")
-    private int typeId;;
+    private int typeId;
 
     @Column(name="sell_status")
     private String sellStatus;
