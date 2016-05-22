@@ -1,36 +1,22 @@
-package com.book.entity;
+package com.book.vo;
 
 import com.book.common.Role;
 
-import javax.persistence.*;
-import java.util.Date;
-
 /**
  * Created by admin on 2016/4/25.
- *  系统用户实体类
+ * 用户Vo类
  */
-@Table(name = "[user]")
-@Entity
-public class User {
 
-    @Id
-    @Column(name="id")
+public class UserListVo {
+
     private String id;
-
-    @Column(name="user_name")
     private String userName;
 
-    @Column(name="password")
     private String password;
 
-    @Column(name="role")
     private Role role;
 
-    @Column(name="uts")
-    private Date uts;
-
-    @Column(name="cts")
-    private Date cts;
+    private String roleDesc;
 
     public String getId() {
         return id;
@@ -64,19 +50,11 @@ public class User {
         this.role = role;
     }
 
-    public Date getUts() {
-        return uts;
+    public String getRoleDesc() {
+        return roleDesc;
     }
 
-    public void setUts(Date uts) {
-        this.uts = uts;
-    }
-
-    public Date getCts() {
-        return cts;
-    }
-
-    public void setCts(Date cts) {
-        this.cts = cts;
+    public void setRoleDesc(String roleDesc) {
+        this.roleDesc = roleDesc;
     }
 }

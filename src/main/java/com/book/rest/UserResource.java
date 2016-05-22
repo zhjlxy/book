@@ -1,10 +1,16 @@
 package com.book.rest;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.book.bo.Message;
 import com.book.bo.Status;
 import com.book.common.Role;
+import com.book.entity.Book;
+import com.book.entity.User;
 import com.book.service.UserService;
+import com.book.vo.PageResultVo;
+import com.book.vo.UserListVo;
 import com.book.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -14,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
@@ -114,6 +121,23 @@ public class UserResource {
         return msg;
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    PageResultVo list(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum,
+                      @RequestParam(value = "userName", required = false) String userName){
+        PageResultVo vo = new PageResultVo(true);
+
+        List<UserListVo> list =  userService.list(pageSize, pageNum, userName);
+        int total = userService.list(userName);
+        int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
+        vo.setCount(count);
+        vo.setPageNum(pageNum);
+        vo.setData(JSONArray.toJSONString(list, SerializerFeature.DisableCircularReferenceDetect));
+        vo.setFlag(true);
+
+        return  vo;
+    }
+
     @RequestMapping(value = "/user_name",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Message getUserName(){
         Message msg  = new Message();
@@ -131,5 +155,73 @@ public class UserResource {
         }
         return msg;
     }
+    @RequestMapping(value = "/reset_password",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message resetPassword(@RequestParam("userId") String userId){
+        Message msg = new Message();
+        try {
+            if(StringUtils.isBlank(userId)){
+                msg.setStatus(Status.ERROR);
+                msg.setStatusMsg("userId is empty");
+
+                return msg;
+            }
+
+            userService.resetPassword(userId);
+            msg.setStatus(Status.SUCCESS);
+
+
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+        }
+        return msg;
+    }
+    @RequestMapping(value = "/delete",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message delete(@RequestParam("userId") String userId){
+        Message msg = new Message();
+        try {
+            if(StringUtils.isBlank(userId)){
+                msg.setStatus(Status.ERROR);
+                msg.setStatusMsg("userId is empty");
+
+                return msg;
+            }
+
+            userService.delete(userId);
+            msg.setStatus(Status.SUCCESS);
+
+
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+        }
+        return msg;
+    }
+    @RequestMapping(value = "/change_password",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message changePassword(@RequestParam("password") String password){
+        Message msg = new Message();
+        try {
+            if(password == null || StringUtils.isBlank(password.trim())){
+                msg.setStatus(Status.ERROR);
+                msg.setStatusMsg("password is empty");
+            }
+            userService.changePassword(password);
+            msg.setStatus(Status.SUCCESS);
+
+
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+            msg.setStatus(Status.ERROR);
+            msg.setStatusMsg(e.getMessage());
+        }
+        return msg;
+    }
+
+
+
+
+
 
 }

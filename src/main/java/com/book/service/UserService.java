@@ -1,7 +1,11 @@
 package com.book.service;
 
 import com.book.common.Role;
+import com.book.entity.User;
+import com.book.vo.UserListVo;
 import com.book.vo.UserVo;
+
+import java.util.List;
 
 /**
  * Created by admin on 2016/4/25.
@@ -34,4 +38,26 @@ public interface UserService {
      * @return 登录的用户名，如果没有登录，返回游客
      */
     public String getUserName();
+
+    /**
+     * 根据userName模糊查询用户，如果userName为空，查询全部
+     * @param pageSize 当前的页数
+     * @param pageNum  每页的条数
+     * @param userName 用户名
+     * @return 符合条件的用户集合
+     */
+    public List<UserListVo> list(int pageSize, int pageNum, String userName);
+
+    /**
+     *  查询符合条件的用户集合
+     * @param userName 用户名
+     * @return 符合条件的所有用户的集合
+     */
+    public int list(String userName);
+
+    public void resetPassword(String userId);
+
+    public void delete(String userId);
+
+    public void changePassword(String password);
 }

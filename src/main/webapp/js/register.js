@@ -104,7 +104,7 @@ function sub(){
             location.href = "login.html";
         }else{
             var msg = "unkown error";
-            if(data.statusMsg == ""){
+            if(data.statusMsg != ""){
                 msg = data.statusMsg;
             }
             alert(msg);
