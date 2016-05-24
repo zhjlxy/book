@@ -9,7 +9,9 @@ function addUserName(){
         var userName = "欢迎您【】";
         if(data.status=="SUCCESS"){
             var json = $.parseJSON(data.data);
-            userName = "欢迎您【"+json.user_mame+"】";
+            userName = "欢迎您【"+json.userName+"】";
+            var role = json.role;
+            buildNav(role);
         }else{
             var msg = "unkown error";
             if(data.statusMsg == ""){
@@ -41,4 +43,24 @@ function carNum(){
             alert(msg);
         }
     });
+}
+
+function buildNav(role) {
+    $("#role").val(role);
+    if("ADMIN" == role){
+        $(".buyers").removeClass("hidden");
+        $(".admin").removeClass("hidden");
+        $(".seller").removeClass("hidden");
+    }else if("SELLER"  == role){
+        $(".buyers").removeClass("hidden");
+        $(".seller").removeClass("hidden");
+    }else if("BUYERS"  == role){
+        $(".buyers").removeClass("hidden");
+    }else if("VISITOR" == role){
+        $(".visitor").removeClass("hidden");
+    }else {
+        alert("role error")
+    }
+
+
 }

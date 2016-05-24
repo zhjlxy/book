@@ -28,6 +28,9 @@ $(document).ready(function () {
         }
     });
 
+    // 如果是游客不能添加到购物测
+    $("#addCar").hide();
+
 });
 
 function addCar() {

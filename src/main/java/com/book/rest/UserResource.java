@@ -142,11 +142,9 @@ public class UserResource {
     public @ResponseBody Message getUserName(){
         Message msg  = new Message();
         try{
-            String userName = userService.getUserName();
+            User user = userService.getUserName();
             msg.setStatus(Status.SUCCESS);
-            JSONObject json = new JSONObject();
-            json.put("user_mame", userName);
-            msg.setData(json.toJSONString());
+            msg.setData(JSONObject.toJSONString(user));
 
         }catch (Exception e){
             logger.error(e.getMessage(), e);

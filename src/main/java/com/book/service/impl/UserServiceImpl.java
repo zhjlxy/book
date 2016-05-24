@@ -78,17 +78,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getUserName() {
-        String result = "游客";
+    public User getUserName() {
+        User result = new User();
+        result.setUserName("游客");
+        result.setRole(Role.VISITOR);
         String userId = (String) session.getAttribute(USERID);
         if(StringUtils.isNotBlank(userId)){
             User user = userDao.get(userId);
             if(user == null){
                 throw new RuntimeException("session userId error");
             }
-            result =  user.getUserName();
+            result.setUserName(user.getUserName());
+            result.setRole(user.getRole());
         }
-
         return result;
     }
 

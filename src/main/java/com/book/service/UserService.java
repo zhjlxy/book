@@ -37,7 +37,7 @@ public interface UserService {
      * 取登录的用户名
      * @return 登录的用户名，如果没有登录，返回游客
      */
-    public String getUserName();
+    public User getUserName();
 
     /**
      * 根据userName模糊查询用户，如果userName为空，查询全部

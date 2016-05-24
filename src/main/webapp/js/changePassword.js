@@ -3,6 +3,9 @@
  */
 $(document).ready(function() {
     // Generate a simple captcha
+    // 添加欢迎语
+    addUserName();
+    carNum();
     initValidator();
 });
 
