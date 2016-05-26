@@ -21,8 +21,6 @@ function sub() {
         "address":$("#address").val(),
         "remarks":$("#remarks").val(),
     };
-    alert(json);
-    
     
     request.ajax("POST","/order",json,function(data){
         if(data.status=="SUCCESS"){

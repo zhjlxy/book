@@ -30,9 +30,7 @@ $(document).ready(function () {
         });
     }
     request.inputfile("img", "/book/upload", function (data) {
-        alert(data.data);
         var result = $.parseJSON(data.data)
-        alert(result.picture);
 
         $("#picture").val(result.picture);
     });
@@ -42,7 +40,6 @@ function sub() {
     // 取数据
     // 图片是否已经上传；
     $("#submit").attr("disabled","true");
-    alert("sub");
     var img = $("#picture").val();
     if(img == ""){
         alert("请先上传图片！");
@@ -60,7 +57,7 @@ function sub() {
         "id":$("#id").val()
     }
     request.ajax("POST","/book/save_or_update",json,function(data){
-        alert(data);
+        location.href="bookMannger.html";
     });
 }
 

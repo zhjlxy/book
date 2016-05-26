@@ -91,7 +91,6 @@ function initValidator() {
  */
 
 function sub(){
-    alert("aa");
     var json = {
         "user_name":$("#username").val(),
         "password":$("#password").val(),

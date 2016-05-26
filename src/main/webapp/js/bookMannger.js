@@ -18,7 +18,7 @@ function getSellBook(pageNum) {
             $("#navUl").empty();
             if(data.count>1) {
                 for (var c = 1; c <= data.count; c++) {
-                    var liDom;
+                    var liDom="";
                     if (c == data.pageNum) {
                         liDom = "<li class=\"active\"><a href=\"javascript:void(0)\" onclick='getSellBook(" + c + ")'>" + c + " <span class=\"sr-only\">(current)</span></a></li>";
                     } else {
@@ -47,7 +47,7 @@ function addSellBookInfo(jsonArr) {
         $("#bookInfo").append("<tr><th class='text-center'>序号</th><th class='text-center'>图片</th><th class='text-center'>名字</th><th class='text-center'>售价</th><th class='text-center'>状态<th class='text-center'>操作&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"addbook.html\">添加</a></th></tr>");
         for(var i=0; i<jsonArr.length; i++){
             var json = jsonArr[i];
-            var actionStr ;
+            var actionStr ="";
             if(json.sellStatus == "in"){
                 actionStr = "<a href='javascript:void(0)' onclick=\"updateSellStatus('off','"+json.id+"')\">下架</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                 +"<a href=\"addbook.html?bookId="+json.id+"\">修改</a>";
