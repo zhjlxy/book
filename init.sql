@@ -110,6 +110,18 @@ CREATE TABLE `order_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- 添加用户需求表
+CREATE TABLE `want_to_buy` (
+  `id` varchar(200) NOT NULL,
+  `user_id` varchar(200) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `content` varchar(3000) NOT NULL,
+  `remark` varchar(200) DEFAULT NULL,
+  `uts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 

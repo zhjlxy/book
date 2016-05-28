@@ -95,6 +95,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public  String getUserNameById(String userId){
+        if(StringUtils.isBlank(userId)){
+            throw  new RuntimeException("userId is empty");
+        }
+        User user = userDao.get(userId);
+        if(user == null){
+            throw  new RuntimeException("no user with userId is "+ userId);
+        }
+        return user.getUserName();
+    }
+
+    @Override
     public List<UserListVo> list(int pageSize, int pageNum, String userName) {
         int firstNum = pageSize*(pageNum-1);
         Map<String, Object> criteria = getCriteria(userName);

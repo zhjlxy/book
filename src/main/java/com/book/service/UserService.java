@@ -60,4 +60,6 @@ public interface UserService {
     public void delete(String userId);
 
     public void changePassword(String password);
+
+    public  String getUserNameById(String userId);
 }
