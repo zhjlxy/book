@@ -48,7 +48,7 @@ function addUserInfo(jsonArr) {
         for(var i=0; i<jsonArr.length; i++){
             var json = jsonArr[i];
             var actionStr ="<a href='javascript:void(0)' onclick=\"resetPassword('"+json.id+"')\">重置密码</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-            +"<a href='javascript:void(0)' onclick=\"deleteUser('"+json.id+"')\">修改</a>";;
+            +"<a href='javascript:void(0)' onclick=\"deleteUser('"+json.id+"')\">删除</a>";;
 
             $("#bookInfo").append("<tr><td>"+eval(i+1)+"</td><td>"+json.userName+"</td><td>"+json.roleDesc+"</td><td>"+actionStr+"</td></tr>")
         }
