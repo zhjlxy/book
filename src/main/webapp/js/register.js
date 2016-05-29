@@ -91,6 +91,14 @@ function initValidator() {
  */
 
 function sub(){
+    var capt = $("#captchaOperation").html();
+    capt = capt.substring(0,capt.length-1);
+    if(!(eval(capt) == $("#capt_result").val())){
+        alert("计算失败，请重新填写");
+        location.href="register.html";
+        return false;
+    }
+
     var json = {
         "user_name":$("#username").val(),
         "password":$("#password").val(),
