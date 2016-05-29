@@ -21,7 +21,7 @@ USE `shbooktradingplatform`;
 
 DROP TABLE IF EXISTS `book`;
 
-REATE TABLE `book` (
+CREATE TABLE `book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `book_name` varchar(100) NOT NULL,
   `author` varchar(100) NOT NULL,
