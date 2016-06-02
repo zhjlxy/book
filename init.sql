@@ -69,7 +69,7 @@ CREATE TABLE `user` (
 -- 类型表
 DROP TABLE IF EXISTS `book_type`;
 CREATE TABLE `book_type` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `desc` varchar(100) NOT NULL,
   `cts` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
