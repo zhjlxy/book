@@ -7,7 +7,7 @@ $(document).ready(function () {
     addUserName();
     carNum();
     initType();
-    getData(1,"");
+    getData(1,"","");
 });
 
 /**
@@ -32,7 +32,18 @@ function initType(){
 function getType(pageNum,type,obj) {
     $(obj).parent().parent().children().removeClass("active");
     $(obj).parent().addClass("active");
-    getData(pageNum, type);
+    $("#type").val(type);
+    getData(pageNum, type,"");
+}
+
+/**
+ * 搜索
+ */
+function search() {
+    var bookName=$("#book_name").val();
+    var type=$("#type").val();
+    getData(1, type,bookName);
+
 }
 
 
@@ -41,12 +52,17 @@ function getType(pageNum,type,obj) {
  * @param pageNum 第几页
  * @param type 类型
  */
-function getData(pageNum,type) {
+function getData(pageNum,type,bookName) {
 
     var add_type=""
     if(type != ""){
-        add_type = "&type="+type;
+        add_type = add_type+"&type="+type;
     }
+    if(bookName !=""){
+        add_type = add_type+"&bookName="+bookName;
+    }
+    $("#book_name").val(bookName);
+
     request.ajax("GET","book?pageSize=8&pageNum="+pageNum+add_type,"",function successFn(data) {
 
         // 成功
@@ -91,9 +107,9 @@ function getData(pageNum,type) {
                 for (var c = 1; c <= count; c++) {
                     var liDom;
                     if (c == pagNum) {
-                        liDom = "<li class=\"active\"><a href=\"javascript:void(0)\" onclick='getData(" + c + ",\"" + type + "\")'>" + c + " <span class=\"sr-only\">(current)</span></a></li>";
+                        liDom = "<li class=\"active\"><a href=\"javascript:void(0)\" onclick=\"getData(" + c + ",'" + type + "','" + bookName + "')\">" + c + " <span class=\"sr-only\">(current)</span></a></li>";
                     } else {
-                        liDom = "<li><a a href=\"javascript:void(0)\" onclick=\"getData(" + c + ",'" + type + "')\">" + c + " <span class=\"sr-only\">(current)</span></a></li>";
+                        liDom = "<li><a a href=\"javascript:void(0)\" onclick=\"getData(" + c + ",'" + type + "','" + bookName + "')\">" + c + " <span class=\"sr-only\">(current)</span></a></li>";
                     }
                     $("#navUl").append(liDom);
                 }

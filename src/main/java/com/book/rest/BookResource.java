@@ -59,11 +59,12 @@ public class BookResource {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     PageResultVo list(@RequestParam("pageSize") int pageSize, @RequestParam("pageNum") int pageNum,
-                    @RequestParam(value = "type", required = false) String type){
+                    @RequestParam(value = "type", required = false) String type,
+                    @RequestParam(value = "bookName", required = false) String bookName){
         PageResultVo vo = new PageResultVo(true);
 
-        List<Book> list =  bookService.list(pageSize, pageNum, type);
-        int total = bookService.list(type).size();
+        List<Book> list =  bookService.list(pageSize, pageNum, type, bookName);
+        int total = bookService.list(type, bookName).size();
         int count  = total%pageSize==0 ? total/pageSize : total/pageSize+1;
         vo.setCount(count);
         vo.setPageNum(pageNum);

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface BookDao extends  GenericDao<Book, Integer> {
    // 分页查询
-    List<Book> list(int firstNum, int pageSize ,String type);
+    List<Book> list(int firstNum, int pageSize ,String type, String bookName);
 
-    List<Book> list(String type);
+    List<Book> list(String type, String bookName);
 }

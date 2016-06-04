@@ -10,10 +10,10 @@ import java.util.List;
  * Created by lixuy on 2016/4/16.
  */
 public interface BookService {
-    public List<Book> list(String type);
+    public List<Book> list(String type, String bookName);
 
     // 分页
-    public List<Book> list(int pageSize, int pageNum, String type);
+    public List<Book> list(int pageSize, int pageNum, String type, String bookName);
 
     public BookVo getById(int id);
 

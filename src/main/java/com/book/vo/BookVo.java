@@ -20,6 +20,8 @@ public class BookVo {
 
     private String picture;
 
+    private int type;
+
     public Integer getId() {
         return id;
     }
@@ -74,5 +76,13 @@ public class BookVo {
 
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

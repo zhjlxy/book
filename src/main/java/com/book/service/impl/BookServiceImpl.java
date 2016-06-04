@@ -29,14 +29,14 @@ public class BookServiceImpl  implements BookService{
 
 
     @Override
-    public List<Book> list(String type) {
-        return bookDao.list(type);
+    public List<Book> list(String type, String bookName) {
+        return bookDao.list(type,bookName);
     }
 
     @Override
-    public List<Book> list(int pageSize, int pageNum, String type) {
+    public List<Book> list(int pageSize, int pageNum, String type, String bookName) {
         int firstNum = pageSize*(pageNum-1);
-        return bookDao.list(firstNum, pageSize, type);
+        return bookDao.list(firstNum, pageSize, type,bookName);
     }
 
     @Override
@@ -192,6 +192,7 @@ public class BookServiceImpl  implements BookService{
         book.setDesc(bookVo.getDesc());
         book.setPicture("/"+bookVo.getPicture());
         book.setPrice(bookVo.getPrice());
+        book.setTypeId(bookVo.getType());
 
         // update
         if(bookVo.getId()!= null){
@@ -216,6 +217,7 @@ public class BookServiceImpl  implements BookService{
             vo.setName(book.getName());
             vo.setNew_status(book.getNewStatus());
             vo.setPrice(book.getPrice());
+            vo.setType(book.getTypeId());
         }
         return vo;
     }

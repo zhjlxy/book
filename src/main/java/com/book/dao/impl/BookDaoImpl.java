@@ -32,16 +32,22 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
      * @param type 类型
      * @return
      */
-    public List<Book> list(String type) {
+    public List<Book> list(String type, String bookName) {
 
-        String sql = "from Book";
+        String sql = "from Book where 1=1";
         if(StringUtils.isNotBlank(type)){
-            sql = sql + " where typeId=?";
+            sql = sql + " and typeId=:typeId";
+        }
+        if(StringUtils.isNotBlank(bookName)){
+            sql = sql + " and name like :bookName";
         }
 
         Query query = getCurrentSession().createQuery(sql);
         if(StringUtils.isNotBlank(type)){
-            query.setInteger(0,Integer.parseInt(type));
+            query.setInteger("typeId",Integer.parseInt(type));
+        }
+        if(StringUtils.isNotBlank(bookName)){
+            query.setString("bookName","%"+bookName+"%");
         }
 
         List<Book> result =  query.list();
@@ -51,15 +57,21 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> list(int firstNum, int pageSize, String type) {
-        String sql = "from Book";
+    public List<Book> list(int firstNum, int pageSize, String type, String bookName) {
+        String sql = "from Book where 1=1";
         if(StringUtils.isNotBlank(type)){
-            sql = sql + " where typeId=?";
+            sql = sql + " and typeId=:typeId";
+        }
+        if(StringUtils.isNotBlank(bookName)){
+            sql = sql + " and name like :bookName";
         }
 
         Query query = getCurrentSession().createQuery(sql);
         if(StringUtils.isNotBlank(type)){
-            query.setInteger(0,Integer.parseInt(type));
+            query.setInteger("typeId",Integer.parseInt(type));
+        }
+        if(StringUtils.isNotBlank(bookName)){
+            query.setString("bookName","%"+bookName+"%");
         }
 
         query.setFirstResult(firstNum);
