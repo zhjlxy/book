@@ -59,7 +59,7 @@ function getData(pageNum,type,bookName) {
         add_type = add_type+"&type="+type;
     }
     if(bookName !=""){
-        add_type = add_type+"&bookName="+bookName;
+        add_type = add_type+"&bookName="+encodeURI(encodeURI(bookName));
     }
     $("#book_name").val(bookName);
 

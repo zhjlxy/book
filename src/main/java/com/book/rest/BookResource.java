@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +63,14 @@ public class BookResource {
                     @RequestParam(value = "type", required = false) String type,
                     @RequestParam(value = "bookName", required = false) String bookName){
         PageResultVo vo = new PageResultVo(true);
+        if(StringUtils.isNotBlank(bookName)){
+            try {
+                bookName = URLDecoder.decode(bookName,"UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                logger.error(e, e);
+                bookName = StringUtils.EMPTY;
+            }
+        }
 
         List<Book> list =  bookService.list(pageSize, pageNum, type, bookName);
         int total = bookService.list(type, bookName).size();
