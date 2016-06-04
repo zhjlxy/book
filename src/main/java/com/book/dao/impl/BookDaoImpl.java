@@ -34,7 +34,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
      */
     public List<Book> list(String type, String bookName) {
 
-        String sql = "from Book where 1=1";
+        String sql = "from Book where sellStatus=:sellStatus";
         if(StringUtils.isNotBlank(type)){
             sql = sql + " and typeId=:typeId";
         }
@@ -43,6 +43,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         }
 
         Query query = getCurrentSession().createQuery(sql);
+        query.setString("sellStatus", Book.SELL_IN);
         if(StringUtils.isNotBlank(type)){
             query.setInteger("typeId",Integer.parseInt(type));
         }
@@ -58,7 +59,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
 
     @Override
     public List<Book> list(int firstNum, int pageSize, String type, String bookName) {
-        String sql = "from Book where 1=1";
+        String sql = "from Book where sellStatus=:sellStatus";
         if(StringUtils.isNotBlank(type)){
             sql = sql + " and typeId=:typeId";
         }
@@ -67,6 +68,7 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         }
 
         Query query = getCurrentSession().createQuery(sql);
+        query.setString("sellStatus", Book.SELL_IN);
         if(StringUtils.isNotBlank(type)){
             query.setInteger("typeId",Integer.parseInt(type));
         }

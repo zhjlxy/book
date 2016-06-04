@@ -55,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
         if(myCar == null || myCar.isEmpty()){
             throw new RuntimeException("购物车信息为空！！");
         }
+        // 修改购物车中的书的状态为已销售
+        updateBookStatus(myCar);
         // 订单
         Order order = getOrder(myCar,vo);
         // 订单详情
@@ -66,12 +68,33 @@ public class OrderServiceImpl implements OrderService {
         for(OrderInfo oi : orderInfos){
             orderInfoDao.save(oi);
         }
+        //
 
         // 删除购物车中信息
         car.delCar(userId);
 
 
         return true;
+    }
+
+    /**
+     * 修改购物车中书的状态
+     * @param myCar
+     */
+    private void updateBookStatus(List<Book> myCar) {
+        if(myCar!=null && !myCar.isEmpty()){
+            for(Book book : myCar){
+                Book nowStatus = bookDao.get(book.getId());
+                if(book==null){
+                    throw new RuntimeException("system error");
+                }
+               if(!Book.SELL_IN.equals(nowStatus.getSellStatus())){
+                   throw new RuntimeException("have sell"+nowStatus.getName());
+               }
+                nowStatus.setSellStatus(Book.SELL_OVER);
+                bookDao.saveOrUpdate(nowStatus);
+            }
+        }
     }
 
     /**
