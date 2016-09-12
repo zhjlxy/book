@@ -1,6 +1,7 @@
 package com.book.service;
 
 import com.book.common.Role;
+import com.book.entity.Permission;
 import com.book.entity.User;
 import com.book.vo.UserListVo;
 import com.book.vo.UserVo;
@@ -39,6 +40,7 @@ public interface UserService {
      */
     public User getUserName();
 
+    public List<Permission> getUserPermission();
     /**
      * 根据userName模糊查询用户，如果userName为空，查询全部
      * @param pageSize 当前的页数

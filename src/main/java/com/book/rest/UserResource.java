@@ -153,6 +153,20 @@ public class UserResource {
         }
         return msg;
     }
+    @RequestMapping(value = "/getPermission",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Message getPermission(){
+        Message msg = new Message();
+        try {
+            msg.setData(JSONArray.toJSONString(userService.getUserPermission(), SerializerFeature.DisableCircularReferenceDetect));
+            msg.setStatus(Status.SUCCESS);
+        }catch (Exception e){
+            logger.error(e, e);
+            msg.setStatus(Status.ERROR);
+            msg.setError(e.getMessage());
+        }
+
+        return msg;
+    }
     @RequestMapping(value = "/reset_password",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Message resetPassword(@RequestParam("userId") String userId){
         Message msg = new Message();

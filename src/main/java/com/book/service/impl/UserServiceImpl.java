@@ -1,10 +1,14 @@
 package com.book.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.book.common.Role;
+import com.book.dao.PermissionDao;
+import com.book.dao.RolePermissionRelDao;
 import com.book.dao.UserDao;
+import com.book.entity.Permission;
+import com.book.entity.RolePermissionRel;
 import com.book.entity.User;
 import com.book.service.UserService;
+import com.book.vo.PermissionVo;
 import com.book.vo.UserListVo;
 import com.book.vo.UserVo;
 import org.apache.commons.lang.StringUtils;
@@ -28,7 +32,14 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Autowired
+    private PermissionDao permissionDao;
+
+    @Autowired
+    private RolePermissionRelDao rolePermissionRelDao;
+
+    @Autowired
     private HttpSession session;
+
 
     @Override
     public Role login(UserVo userVo) {
@@ -75,6 +86,31 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    public List<Permission> getUserPermission(){
+        List<Permission> permissions = new ArrayList<>();
+        String userId = (String) session.getAttribute(USERID);
+        if(StringUtils.isNotBlank(userId)){
+            User user = userDao.get(userId);
+            if(user == null){
+                throw new RuntimeException("session userId error");
+            }
+            List<RolePermissionRel> rels =  rolePermissionRelDao.getByRole(user.getRole());
+
+           permissions = permissionDao.list(getPermissionIds(rels));
+        }
+        return permissions;
+    }
+
+    private List<Integer> getPermissionIds(List<RolePermissionRel> rels) {
+        List<Integer> permissionIds = new ArrayList<>();
+        if(rels !=null && !rels.isEmpty()){
+            for(RolePermissionRel rel : rels){
+                permissionIds.add(rel.getPermissionId());
+            }
+        }
+        return permissionIds;
     }
 
     @Override
